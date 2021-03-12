@@ -1,0 +1,79 @@
+ function ListNode(value, next) {
+      this.value = (value===undefined ? 0 : val)
+      this.next = (next===undefined ? null : next)
+  }
+ */
+/**
+ @param {ListNode} head
+  @return {ListNode}
+ */
+function sortList (head) {
+  // Check that we have at least 2 values
+  if(!head || !head.next) {
+    return head;
+}
+//split  list
+  let left = head
+  let right = half(head)
+
+//Sort
+left = sortList(left);
+right = sortList(right);
+
+//merge list
+return merge(left, right)
+}
+function half(head) {
+  // Setup baseline variables
+  let slow = head;
+  let fast = head.next;
+
+  // While our double iteration has at least another value
+  while (fast && fast.next) {
+    // Push fast x 2
+    fast = fast.next.next;
+    // Set our slow iteration x 1
+    slow = slow.next;
+  }
+
+  // Close off the first half of the list
+  let prev = slow.next;
+  slow.next = null
+  slow = prev;
+
+  return slow;
+}
+  
+  
+
+// Merging the lists and doing the merge sort
+function merge(left, right) {
+  // Set up a new head
+  const head = new ListNode();
+
+  // Establish our current node;
+  let current = head;
+
+  while (left && right) {
+    // If list 1's value is smaller than list 2's value...
+    if (left.value < right.value) {
+      // Set our next value to list 1's next value
+      current.next = left;
+      // Move forward with list 1
+      left = left.next;
+    } else {
+      // Set our next value to list 2's next value
+      current.next = right;
+      // Move forward with list 2
+      right = right.next;
+    }
+    
+    // Set our current to either list 1 or 2
+    current = current.next;
+  }
+
+  // Place the last value into the end
+  current.next = left === null ? right : left;
+console.log(head.next)
+  return head.next;
+};
